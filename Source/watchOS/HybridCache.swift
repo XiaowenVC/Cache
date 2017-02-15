@@ -1,4 +1,5 @@
 import Foundation
+import WatchKit
 
 /**
  HybridCache supports storing all kinds of objects, as long as they conform to
@@ -18,7 +19,28 @@ public class HybridCache: BasicHybridCache {
     public override init(name: String, config: Config = Config.defaultConfig) {
         super.init(name: name, config: config)
         
-        backStorage.clearExpired(nil)
+        let notificationCenter = NotificationCenter.default
+        
+        notificationCenter.addObserver(self, selector: #selector(HybridCache.applicationDidEnterBackground),
+                                       name: Notification.Name.NSExtensionHostDidEnterBackground, object: nil)
+    }
+    
+    /**
+     Removes notification center observer.
+     */
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Notifications
+
+    /**
+     Clears expired cache items when the app enters background.
+     */
+    func applicationDidEnterBackground() {
+        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(), userInfo: nil) { [weak self] (error) in
+            self?.backStorage.clearExpired(nil)
+        }
     }
 
 }
