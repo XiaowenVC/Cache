@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.ios.source_files = 'Source/{iOS,Shared}/**/*'
   s.osx.source_files = 'Source/{Mac,Shared}/**/*'
   s.tvos.source_files = 'Source/{iOS,Shared}/**/*'
-  s.watchos.source_files = 'Source/{iOS,Shared}/**/*'
+  s.watchos.source_files = 'Source/{watchOS,Shared}/**/*'
 
   s.frameworks = 'Foundation'
   s.dependency 'CryptoSwift'
