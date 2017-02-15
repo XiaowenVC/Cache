@@ -19,13 +19,13 @@ public class HybridCache: BasicHybridCache {
     super.init(name: name, config: config)
 
     let notificationCenter = NotificationCenter.default
-
+    
     notificationCenter.addObserver(self, selector: #selector(HybridCache.applicationDidReceiveMemoryWarning),
-      name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
+      name: Notification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
     notificationCenter.addObserver(self, selector: #selector(HybridCache.applicationWillTerminate),
-      name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
+      name: Notification.Name.UIApplicationWillTerminate, object: nil)
     notificationCenter.addObserver(self, selector: #selector(HybridCache.applicationDidEnterBackground),
-      name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+      name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
   }
 
   /**
@@ -57,6 +57,9 @@ public class HybridCache: BasicHybridCache {
   func applicationDidEnterBackground() {
     let application = UIApplication.shared
     var backgroundTask: UIBackgroundTaskIdentifier?
+    
+    
+    NSNotification.Name.NSApplicationWillTerminate
 
     backgroundTask = application.beginBackgroundTask (expirationHandler: { [weak self] in
       guard let weakSelf = self, let backgroundTask = backgroundTask else { return }
