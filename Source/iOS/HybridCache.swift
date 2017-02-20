@@ -57,9 +57,6 @@ public class HybridCache: BasicHybridCache {
   func applicationDidEnterBackground() {
     let application = UIApplication.shared
     var backgroundTask: UIBackgroundTaskIdentifier?
-    
-    
-    NSNotification.Name.NSApplicationWillTerminate
 
     backgroundTask = application.beginBackgroundTask (expirationHandler: { [weak self] in
       guard let weakSelf = self, let backgroundTask = backgroundTask else { return }
